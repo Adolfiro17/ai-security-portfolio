@@ -47,20 +47,53 @@ flowchart LR
     style Tool3 fill:#3a1414,stroke:#c0392b,color:#fff,stroke-dasharray: 5 5
 ```
 
-## Attack
+## Attack Catalogue
 
-Seed one document read by the agent with an **indirect prompt injection** instructing it to ignore
-its rules and access the restricted asset file or misuse the ticket tool. Demonstrate the insecure
-design succeeding first — that's the "before" that makes the "after" persuasive.
+- **Indirect prompt injection.** Seed one document read by the agent with instructions to ignore
+  its rules and access the restricted asset file or misuse the ticket tool. Demonstrate the
+  insecure design succeeding first — that's the "before" that makes the "after" persuasive.
+- **Cross-agent task escalation.** Extend the scenario with a second, downstream agent (e.g. an
+  asset-management agent the support agent can request data from). A compromised or manipulated
+  support agent falsely escalates a request as coming from a higher-trust source to extract data
+  the requesting agent shouldn't itself be able to reach — the pattern McKinsey describes as a
+  scheduling agent falsely escalating a request as coming from a licensed physician to extract
+  clinical data. Demonstrate the escalation succeeding against unscoped inter-agent trust, then
+  blocked once each agent independently verifies the other's identity and authorization scope
+  rather than trusting a claimed role.
+- **Synthetic-identity spoofing.** Forge or replay the support agent's credentials against the
+  downstream agent, mirroring the pattern of an attacker forging a claims-processing agent's
+  digital identity to submit requests that trusting systems grant without detecting the
+  impersonation. Demonstrate this succeeding against static, long-lived credentials and blocked
+  once ephemeral, short-lived tokens with per-request identity verification are enforced.
+
+## Extended Architecture — Two-Agent Escalation Path
+
+```mermaid
+flowchart LR
+    Support[Support Agent] -->|claims elevated role,\nrequests asset data| Gate2{Trust Boundary\nmutual identity +\nscope verification}
+    Gate2 -.->|BLOCKED: claimed role\nnot independently verified| Asset[Asset Management Agent]
+    Gate2 -->|verified, scoped,\nephemeral token| Asset
+
+    style Support fill:#3a2a14,stroke:#e67e22,color:#fff
+```
+
+Each agent-to-agent call carries its own short-lived, scoped credential and is logged
+independently — a downstream agent never trusts an upstream agent's self-reported role.
 
 ## Hardened Controls
 
 - Dedicated agent identity, distinct from the user, so actions are attributable and governable
 - Allow-list of tools and resource-level permissions — least privilege
-- Short-lived, scoped credentials rather than standing access
+- Short-lived, scoped credentials rather than standing access, with per-agent identity threat
+  detection and response (ITDR) so anomalous agent-to-agent request patterns are flagged, not
+  just anomalous human logins
+- Ephemeral credential lifecycle management — tokens between agents expire automatically and are
+  never reused across sessions or tasks
+- Mutual verification at every agent-to-agent boundary — a downstream agent independently confirms
+  the calling agent's identity and authorization scope rather than trusting a claimed role
 - Human-in-the-loop approval for high-impact actions
 - Input trust labels marking retrieved/tool-returned content as untrusted
-- Complete tool-call logging for auditability
+- Complete tool-call logging for auditability, including inter-agent calls
 - Emergency revocation mechanism to kill the agent's access instantly
 
 ## Findings Mapping
@@ -72,14 +105,18 @@ design succeeding first — that's the "before" that makes the "after" persuasiv
 | System prompt / rule leakage | [OWASP LLM07](https://owasp.org/www-project-top-10-for-large-language-model-applications/) |
 | Adversary tactics | [MITRE ATLAS](https://atlas.mitre.org/) |
 | Least privilege, approvals, auditability principles | [CISA AI guidance](https://www.cisa.gov/ai) |
+| Cross-agent task escalation, synthetic-identity risk | McKinsey, *Deploying agentic AI with safety and security* (Oct 2025) |
+| Nonhuman identity, ITDR, ephemeral credential lifecycle management | McKinsey, *Securing the agentic enterprise* (Mar 2026) |
 
 ## Portfolio Checklist
 
 - [ ] Insecure agent implementation + demonstrated exploit (screenshot/log of unauthorised action)
-- [ ] Hardened agent implementation with all seven controls above
-- [ ] Architecture diagrams (before/after, above)
+- [ ] Hardened agent implementation with all controls above, including ITDR and ephemeral credentials
+- [ ] Second downstream agent + demonstrated cross-agent escalation and synthetic-identity attacks
+- [ ] Architecture diagrams (single-agent before/after, plus two-agent escalation path, above)
 - [ ] Permission policy / allow-list definition
-- [ ] Retest evidence: same injection, model still fooled, action still blocked
+- [ ] Retest evidence: same injection, model still fooled, action still blocked; same escalation
+      attempt, downstream agent still refuses the unverified claimed role
 - [ ] Written report + short demo + one-page executive summary
 
 ## Tools & References

@@ -49,6 +49,29 @@ minimum viable set; everything else adds depth.
   runtime, has the least overlap with SOC/agent-ops skills, and is the one project worth treating
   as optional depth rather than core sequence.
 
+## Market and Governance Context
+
+This portfolio isn't built against a hypothetical threat model. Two 2025-2026 McKinsey reports
+from their Risk & Resilience Practice frame why each project matters commercially and how it
+should be governed:
+
+- **["Securing the agentic enterprise: Opportunities for cybersecurity providers"](https://www.mckinsey.com/capabilities/risk-and-resilience/our-insights/securing-the-agentic-enterprise)**
+  (March 2026) sizes the shift: agentic AI spend is projected to rise from roughly 4% to 15% of
+  enterprise cybersecurity budgets within three years, concentrated in identity and access
+  management, governance/risk/compliance, and data security. It names five run time enforcement
+  categories cybersecurity providers need to deliver — agent run time protection, behavioral
+  anomaly detection, agent activity logging and traceability, decision integrity safeguards, and
+  AI-native data loss prevention — which map almost directly onto Project 5's detection scope.
+- **["Deploying agentic AI with safety and security: A playbook for technology leaders"](https://www.mckinsey.com/capabilities/quantumblack/our-insights/deploying-agentic-ai-with-safety-and-security)**
+  (October 2025) frames AI agents as "digital insiders" and names five novel risk categories —
+  chained vulnerabilities, cross-agent task escalation, synthetic-identity risk, untraceable data
+  leakage, and data corruption propagation — that don't fit a traditional AI risk taxonomy. It
+  also names Anthropic's Model Context Protocol explicitly as one of the interagent communication
+  protocols requiring authentication, logging, and permissioning, directly validating Project 2.
+
+Where relevant, individual project READMEs below reference these risk categories and enforcement
+areas alongside their OWASP/MITRE/NIST mappings.
+
 ## Standards and Frameworks Referenced
 
 | Framework                                         | Use                                                                 | Link                                                                          |

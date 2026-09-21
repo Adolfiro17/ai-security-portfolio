@@ -44,6 +44,12 @@ flowchart LR
 - Access to a new or unusual data source
 - Abnormal agent behaviour, e.g. unplanned multi-step actions
 - Possible exfiltration through model output (sensitive data leaving via the response itself)
+- **Cascading anomaly across chained agents** — using [Project 1](../01-secure-ai-agent/README.md)'s
+  two-agent escalation path, detect the pattern where a single upstream error or compromised
+  request propagates into a downstream agent's action, rather than only alerting on each agent in
+  isolation. Chained vulnerabilities and cross-agent task escalation are exactly the failure mode
+  single-agent monitoring misses — a small, individually unremarkable anomaly in one agent that
+  becomes a materially wrong action once it reaches the next agent in the chain.
 
 Each detection is documented with the triggering log event and tuned to reduce false positives —
 the tuning is the actual craft, not just writing the rule.
@@ -61,8 +67,8 @@ monitoring, developer-AI governance, logging, and translating telemetry into act
 
 ## Portfolio Checklist
 
-- [ ] Log shipper / ingestion script feeding telemetry from Projects 1–3
-- [ ] Each of the 7 detections above, implemented as a query/rule
+- [ ] Log shipper / ingestion script feeding telemetry from Projects 1, 2, 4 and 7
+- [ ] Each of the 8 detections above, implemented as a query/rule
 - [ ] False-positive tuning notes per detection
 - [ ] One full incident playbook, walked end to end with sample data
 - [ ] Written report + short demo + one-page executive summary
@@ -75,3 +81,8 @@ monitoring, developer-AI governance, logging, and translating telemetry into act
 | OpenSearch | https://opensearch.org/ |
 | OWASP Top 10 for LLM Applications | https://owasp.org/www-project-top-10-for-large-language-model-applications/ |
 | MITRE ATLAS | https://atlas.mitre.org/ |
+
+**Reference:** McKinsey, *Securing the agentic enterprise* (Mar 2026) — agent run time protection,
+behavioral anomaly detection, agent activity logging and traceability, decision integrity
+safeguards, AI-native data loss prevention. McKinsey, *Deploying agentic AI with safety and
+security* (Oct 2025) — chained vulnerabilities, cross-agent task escalation.
