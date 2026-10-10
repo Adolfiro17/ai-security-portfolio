@@ -138,4 +138,4 @@ echo "=== Commit ==="
 git add .
 git commit -m "Add insecure agent and demonstrate indirect prompt injection exfiltration" || echo "(nothing new to commit)"
 echo "Screenshot 4:"
-git log --oneline | head -3
+git log --oneline -3

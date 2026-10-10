@@ -200,4 +200,4 @@ echo "=== Commit ==="
 git add .
 git commit -m "Add tools, mock compromised model, and structured tool-call logger" || echo "(nothing new to commit)"
 echo "Screenshot 4:"
-git log --oneline | head -3
+git log --oneline -3

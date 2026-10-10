@@ -161,4 +161,4 @@ echo "=== Step 7: commit ==="
 git add .
 git commit -m "Scaffold project structure and seed data, including poisoned support document" || echo "(nothing new to commit)"
 echo "Screenshot 5:"
-git log --oneline | head -3
+git log --oneline -3
