@@ -1,0 +1,31 @@
+name: Project 1 - Secure AI Agent
+
+on:
+  push:
+    paths:
+      - "01-secure-ai-agent/**"
+      - ".github/workflows/project-1-secure-ai-agent.yml"
+  pull_request:
+    paths:
+      - "01-secure-ai-agent/**"
+
+permissions:
+  contents: read
+
+jobs:
+  attack-and-test:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: 01-secure-ai-agent
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+      - name: Run the seeded attack (must succeed on insecure, fail on hardened)
+        run: python -m attacks.run_injection_attack
+      - name: Regression tests
+        run: python -m pytest -v
