@@ -1,0 +1,5 @@
+.venv/
+__pycache__/
+.pytest_cache/
+lab_findings.jsonl
+lab_assessment.md

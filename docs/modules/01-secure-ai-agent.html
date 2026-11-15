@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Module 1: Secure AI Agent</title>
+<meta name="description" content="Attack a tool-using IT support agent with an indirect prompt injection, then stop it with a tool gateway.">
+<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="top"><div class="wrap">
+  <a class="brand" href="../index.html">ai<b>sec</b>-lab</a>
+  <nav aria-label="Primary"><a href="../index.html#modules">All modules</a><a href="#scenario">Scenario</a><a href="#challenges">Challenges</a><a href="#controls">Controls</a><a href="#limits">Limits</a></nav>
+</div></header>
+<main id="main"><div class="wrap">
+<section class="hero" style="border-top:0">
+  <div class="eyebrow">// MODULE 1 &middot; AVAILABLE</div>
+  <h1>Secure an AI agent that can take actions</h1>
+  <p class="lead">A chatbot produces text. An agent does things. Here the model is completely fooled by an injected
+  instruction, and it still does not matter, because a tool gateway refuses the dangerous action.</p>
+  <div class="cta">
+    <a class="btn primary" href="https://github.com/Adolfiro17/ai-security-portfolio/blob/main/01-secure-ai-agent/labs/lab-01-attack-and-defend.md">Open the lab handout</a>
+    <a class="btn" href="https://github.com/Adolfiro17/ai-security-portfolio/tree/main/01-secure-ai-agent">View the code</a>
+  </div>
+  <p><span class="badge">Maps to OWASP LLM01, LLM06, LLM07</span> <span class="badge">About 2 to 3 hours</span> <span class="badge">Python 3.11+</span></p>
+</section>
+
+<section id="scenario">
+  <h2>1. Scenario</h2>
+  <p>Northwind Retail (fictional) runs an internal IT support agent with three tools: read support documents,
+  create a ticket, and look up assets. One document the agent reads contains a hidden instruction telling it
+  to fetch a restricted record. You attack it, then harden it.</p>
+  <div class="mermaid">
+flowchart LR
+  D["Support document<br/>(hidden instruction)"] --> A["Agent"]
+  U["User task"] --> A
+  A -->|"insecure: runs as the user,<br/>no checks"| R[("Restricted record")]
+  A -->|"hardened"| G{"Tool gateway"}
+  G -->|"allow-list, approval,<br/>scoped credential"| T["Permitted tools"]
+  G -.->|"BLOCKED and logged"| R
+  </div>
+</section>
+
+<section id="challenges">
+  <h2>2. Challenges</h2>
+  <p>Each is a single command. Predict the result first, then run it and record your finding.</p>
+  <div class="tablewrap"><table>
+    <tr><th>#</th><th>Challenge</th><th>Run</th></tr>
+    <tr><td>1</td><td>Establish normal behaviour</td><td><code>./start.sh lab 1</code></td></tr>
+    <tr><td>2</td><td>Find the planted injection</td><td><code>./start.sh lab 2</code></td></tr>
+    <tr><td>3</td><td>Exploit the insecure agent</td><td><code>./start.sh lab 3</code></td></tr>
+    <tr><td>4</td><td>Replay against the hardened agent</td><td><code>./start.sh lab 4</code></td></tr>
+    <tr><td>5</td><td>Approval lifecycle</td><td><code>./start.sh lab 5</code></td></tr>
+    <tr><td>6</td><td>Scoped, single-use credentials</td><td><code>./start.sh lab 6</code></td></tr>
+    <tr><td>7</td><td>Emergency revocation</td><td><code>./start.sh lab 7</code></td></tr>
+    <tr><td>8</td><td>Remove controls and see what breaks</td><td><code>./start.sh lab 8</code></td></tr>
+  </table></div>
+<pre><code>python -m lab.findings add --challenge 3 --attack "Indirect injection" --result successful --notes "..."
+python -m lab.findings export    # writes lab_assessment.md</code></pre>
+</section>
+
+<section id="controls">
+  <h2>3. The controls</h2>
+  <div class="tablewrap"><table>
+    <tr><th>Control</th><th>What it prevents</th></tr>
+    <tr><td>Dedicated agent identity</td><td>Actions that cannot be attributed or governed</td></tr>
+    <tr><td>Allow-list per workflow</td><td>Tools the task never needed</td></tr>
+    <tr><td>Short-lived, single-use, tool-scoped credentials</td><td>Stolen or reused access</td></tr>
+    <tr><td>Human approval, bound to one exact call</td><td>Silent high-impact actions</td></tr>
+    <tr><td>Input trust labels</td><td>Treating retrieved text as instructions</td></tr>
+    <tr><td>Complete tool-call logging</td><td>Blind spots in investigation</td></tr>
+    <tr><td>Emergency revocation</td><td>No way to stop an active incident</td></tr>
+  </table></div>
+  <p>Challenge 8 removes controls one at a time. Removing one is survivable. Removing the allow-list and the
+  approval together lets the manipulated model reach the record. That is defence in depth, demonstrated.</p>
+</section>
+
+<section id="limits">
+  <h2>4. Honest limits</h2>
+  <div class="note"><ul>
+    <li>The model is a deterministic mock, chosen so the proof rests on architecture.</li>
+    <li>The gateway issues and redeems its own credentials and approvals are decided in code. In production an identity
+    provider issues tokens, tool backends validate them, and approvals arrive over a channel the agent cannot write to.</li>
+    <li>The two-agent escalation scenario in the project README is a planned extension and is not built yet.</li>
+  </ul></div>
+</section>
+</div></main>
+<footer><div class="wrap">All data is fictional. The insecure agent is insecure on purpose: do not deploy it.</div></footer>
+<script type="module">
+  try {
+    const m = await import("https://cdn.jsdelivr.net/npm/mermaid@11.4.0/dist/mermaid.esm.min.mjs");
+    const dark = !window.matchMedia("(prefers-color-scheme: light)").matches;
+    m.default.initialize({ startOnLoad: false, theme: dark ? "dark" : "default" });
+    await m.default.run({ querySelector: ".mermaid" });
+  } catch (e) { /* diagram stays as readable text if the CDN is unavailable */ }
+</script>
+</body>
+</html>

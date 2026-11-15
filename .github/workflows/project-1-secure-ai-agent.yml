@@ -27,5 +27,7 @@ jobs:
         run: pip install -r requirements.txt
       - name: Run the seeded attack (must succeed on insecure, fail on hardened)
         run: python -m attacks.run_injection_attack
+      - name: Guided challenges run end to end
+        run: python -m lab.challenges all
       - name: Regression tests
         run: python -m pytest -v

@@ -5,6 +5,19 @@ attack no longer just embarrasses you, it *does something*. The strongest demons
 gets fully manipulated by an injection, and it doesn't matter, because hard authorisation
 boundaries stop the dangerous action from executing.
 
+## Run it as a lab
+
+```bash
+./start.sh                 # tests, seeded attack and all guided challenges (Windows: .\start.ps1)
+./start.sh lab 3           # one challenge
+python -m lab.findings export
+```
+
+Handout: [labs/lab-01-attack-and-defend.md](labs/lab-01-attack-and-defend.md). Solutions:
+[instructor/SOLUTION.md](instructor/SOLUTION.md). Notes: [notes/notes.md](notes/notes.md).
+No API key or cloud account is needed. The two-agent escalation scenario below is a planned
+extension and is not built yet.
+
 ## Business Scenario
 
 An internal agent for "Northwind Retail" IT support with three tools: read support documents,
