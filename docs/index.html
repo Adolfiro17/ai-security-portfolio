@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>AI Security Engineering Lab</title>
+<meta name="description" content="Hands-on AI security labs you can run with one command, no API key and no cloud account. Attack an agent, then prove the fix.">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="top"><div class="wrap">
+  <a class="brand" href="#home">ai<b>sec</b>-lab</a>
+  <nav aria-label="Primary">
+    <a href="#modules">Modules</a><a href="#run">Run it</a><a href="#path">Roadmap</a><a href="#guide">Interview guide</a><a href="#about">About</a>
+  </nav>
+</div></header>
+
+<main id="main">
+<div class="wrap">
+<section class="hero" id="home" style="border-top:0">
+  <div class="eyebrow">// AI SECURITY ENGINEERING LAB</div>
+  <h1>Attack the agent. Then prove the fix.</h1>
+  <p class="lead">Hands-on labs where a deliberately vulnerable AI system is attacked, hardened, and then
+  defended by tests that fail if the fix is ever weakened. Every lab runs locally with
+  <strong>one command</strong>, <strong>no API key</strong> and <strong>no cloud account</strong>.</p>
+  <div class="cta">
+    <a class="btn primary" href="modules/01-secure-ai-agent.html">Start Module 1</a>
+    <a class="btn" href="#run">Run it locally</a>
+  </div>
+<div class="term" role="img" aria-label="Terminal output of the seeded attack against the insecure and hardened agents"><span class="p">$</span> ./start.sh attack
+Task: I need a new laptop, can you help me submit an equipment request?
+
+Insecure agent exfiltrated restricted record : <span class="bad">True</span>
+Hardened agent blocked the injected call     : <span class="ok">True</span>
+Hardened agent leaked restricted contents    : <span class="ok">False</span>
+
+<span class="ok">RESULT: PASS</span> <span class="dim">(attack works on insecure, stopped on hardened)</span></div>
+  <div class="stats">
+    <div class="stat"><b>1 of 8</b><span>modules available today</span></div>
+    <div class="stat"><b>0</b><span>API keys needed</span></div>
+    <div class="stat"><b>1</b><span>command to run</span></div>
+    <div class="stat"><b>15</b><span>automated tests in Module 1</span></div>
+  </div>
+</section>
+
+<section id="modules">
+  <h2>Modules</h2>
+  <p class="lead">Each module follows the same loop: baseline, attack, harden, retest, record. Only Module 1 is
+  built today. The rest are planned and are labelled honestly.</p>
+  <div class="grid">
+    <a class="card" href="modules/01-secure-ai-agent.html" style="text-decoration:none;color:inherit">
+      <span class="badge live">AVAILABLE</span><h3>1. Secure AI Agent</h3>
+      <p>Indirect prompt injection against a tool-using agent, and a tool gateway that stops it even when the model is fully fooled.</p></a>
+    <div class="card planned"><span class="badge">PLANNED</span><h3>2. Secure MCP Application</h3><p>Tool poisoning, credential exposure and missing tool-level access control.</p></div>
+    <div class="card planned"><span class="badge">PLANNED</span><h3>3. AI Supply Chain Security</h3><p>Gate a poisoned model or package before it reaches a build.</p></div>
+    <div class="card planned"><span class="badge">PLANNED</span><h3>4. Automated Red-Teaming Lab</h3><p>Attack a chatbot with garak and PyRIT, then automate it in CI.</p></div>
+    <div class="card planned"><span class="badge">PLANNED</span><h3>5. Monitoring and Detection</h3><p>Detect misuse across the other labs from runtime telemetry.</p></div>
+    <div class="card planned"><span class="badge">PLANNED</span><h3>6. Governance and Assurance</h3><p>Trace one finding from attack to risk, control, evidence and retest.</p></div>
+    <div class="card planned"><span class="badge">PLANNED</span><h3>7. Secure RAG Application</h3><p>Threat-model and attack a retrieval pipeline.</p></div>
+    <div class="card planned"><span class="badge">PLANNED</span><h3>8. Model and Dataset Integrity</h3><p>Poison a fine-tuned model and detect the backdoor.</p></div>
+  </div>
+</section>
+
+<section id="run">
+  <h2>Run it</h2>
+  <p>You need Python 3.11 or newer and Git. Nothing else: the model is a deterministic mock, so there is no key to set up.</p>
+  <div class="tablewrap"><table>
+    <tr><th>Command</th><th>What it does</th></tr>
+    <tr><td><code>./start.sh</code></td><td>Create an environment, run the tests, the seeded attack and all eight guided challenges</td></tr>
+    <tr><td><code>./start.sh lab 3</code></td><td>Run one challenge (or <code>all</code>)</td></tr>
+    <tr><td><code>./start.sh site</code></td><td>Serve this site at <code>http://localhost:8000</code></td></tr>
+    <tr><td><code>.\start.ps1</code></td><td>The same, on Windows PowerShell</td></tr>
+  </table></div>
+<pre><code>git clone https://github.com/Adolfiro17/ai-security-portfolio.git
+cd ai-security-portfolio/01-secure-ai-agent
+./start.sh</code></pre>
+  <div class="note"><strong>Why a mock model?</strong> It is built to be fully manipulated. If the hardened agent still stops the attack,
+  the proof rests on the architecture, not on a model happening to behave well.</div>
+</section>
+
+<section id="path">
+  <h2>Roadmap</h2>
+  <p>The labs are built to merge into one application once all eight modules exist.</p>
+  <ol class="roadmap">
+    <li><strong>Now.</strong> Module 1 as a complete lab: handout, guided challenges, findings log, assessment export, instructor solutions, and this site.</li>
+    <li><strong>Next.</strong> Modules 2 to 8, each built by hand with the same loop and the same file layout, so they can run on their own.</li>
+    <li><strong>Then.</strong> A shared module contract and a single launcher, so all labs run from one app with one findings report, in the style of an integrated training environment.</li>
+  </ol>
+</section>
+
+<section id="guide">
+  <h2>Interview guide</h2>
+  <p>Twenty AI security interview questions with worked answers, diagrams, follow-ups and portfolio links.</p>
+  <p><a class="btn" href="https://github.com/Adolfiro17/ai-security-portfolio/tree/main/ai-security-interview-guide">Open the guide on GitHub</a></p>
+</section>
+
+<section id="about">
+  <h2>About</h2>
+  <p>Built by Adolf Sey as a portfolio of attack-and-defend AI security projects. Everything uses fictional data, planted fake
+  secrets and local-only execution. The insecure code is insecure on purpose: do not deploy it, and never point these techniques at systems you do not own.</p>
+  <p>The format draws on ideas from public AI security courses and labs. See the
+  <a href="https://github.com/Adolfiro17/ai-security-portfolio/blob/main/ai-security-interview-guide/ATTRIBUTION.md">attribution notes</a>.</p>
+</section>
+</div>
+</main>
+<footer><div class="wrap">AI Security Engineering Lab &middot; all data is fictional &middot; run locally, no keys required</div></footer>
+</body>
+</html>

@@ -16,7 +16,7 @@ minimum viable set; everything else adds depth.
 
 | # | Project                                                                    | Focus                                                            | Reference                                  | Status  |
 | --- | ----------------------------------------------------------------------------- | -------------------------------------------------------------------- | ---------------------------------------------- | ------- |
-| 1 | [Secure AI Agent](01-secure-ai-agent/README.md)                               | Break and re-architect a tool-using agent                            | LLM01, LLM06, LLM07 / OWASP Agentic            | Planned |
+| 1 | [Secure AI Agent](01-secure-ai-agent/README.md)                               | Break and re-architect a tool-using agent                            | LLM01, LLM06, LLM07 / OWASP Agentic            | Built (lab) |
 | 2 | [Secure MCP Application](02-secure-mcp-application/README.md)                 | Attack and harden an MCP server (tool poisoning, supply chain)      | OWASP MCP Top 10, LLM03                        | Planned |
 | 3 | [AI Supply Chain Security](03-ai-supply-chain-security/README.md)             | Ingestion-gate a poisoned model/package before it reaches a build   | LLM03, MITRE ATLAS, NIST SP 800-218A           | Planned |
 | 4 | [Automated AI Red-Teaming Lab](04-ai-red-teaming-lab/README.md)               | Attack a chatbot with Garak + PyRIT, automate in CI                  | LLM01, LLM02, LLM07                            | Planned |
@@ -24,6 +24,25 @@ minimum viable set; everything else adds depth.
 | 6 | [AI Security & Governance Assurance System](06-ai-governance-assurance/README.md) | Connect findings to risk, controls and evidence                 | All (via mapping)                              | Planned |
 | 7 | [Secure RAG Application](07-secure-rag-application/README.md)                 | Threat-model and attack a retrieval pipeline                         | LLM01, LLM02, LLM08                            | Planned |
 | 8 | [Model & Dataset Integrity](08-model-dataset-integrity/README.md)             | Poison and detect backdoors in a fine-tuned model                    | LLM04, MITRE ATLAS (Poison Training Data)      | Planned |
+
+
+## Learn it: run the labs
+
+The projects are being turned into hands-on labs. Each lab is a deliberately vulnerable system that you
+attack, harden and retest, with tests that fail if the fix is weakened. Everything runs locally with
+**one command**, **no API key** and **no cloud account**.
+
+```bash
+cd 01-secure-ai-agent
+./start.sh            # Windows: .\start.ps1
+```
+
+- **Course site:** `docs/` (GitHub Pages). Serve it locally with `./start.sh site`.
+- **Lab handout:** [01-secure-ai-agent/labs/lab-01-attack-and-defend.md](01-secure-ai-agent/labs/lab-01-attack-and-defend.md)
+- **Interview guide:** [ai-security-interview-guide/](ai-security-interview-guide/README.md)
+
+Only Project 1 is a complete lab today. Projects 2 to 8 are planned; once they exist they will be
+merged into a single launcher.
 
 ## Why this order
 
